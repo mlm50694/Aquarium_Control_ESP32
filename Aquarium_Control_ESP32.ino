@@ -1,29 +1,21 @@
 ////////// CONFIGURACION DEL WIFI //////////
 #include <WiFi.h>  //librería para la conexión wifi
-#include "config.h"
-
-////////// CONFIGURACION DEL SENSOR DE TEMPERATURA DS18B20 //////////
-#include <OneWire.h> // Librería para la comunicación con dispositivos OneWire (como el sensor DS18B20)
-#include <DallasTemperature.h> // Librería específica para manejar sensores de temperatura DS18B20 con OneWire
-
-#define Temperature_Sensor 4  // Pin al que está conectado el DS18B20
-OneWire oneWire(Temperature_Sensor); // Inicializa el bus OneWire en el pin definido anteriormente.
-DallasTemperature sensors(&oneWire); // Crea el objeto 'sensors' para manejar los sensores DS18B20. Usa el objeto oneWire para inicializar la librería DallasTemperature
+#include "config.h" //archivo oculto que contiene la clave y contraseña wifi
+#include "Funcion_Temperatura.h"
 
 ////////// CONFIGURACION DEL SENSOR DE CONDUCTIVIDAD TDS //////////
-#define TDS_Sensor 34
-#define VREF 3.3    
-#define SAMPLES 10
+#define TDS_Sensor 34 // Pin al que está conectado el sensor de conductividad
+#define VREF 3.3  //Define la tensión de referencia en 3.3  
+#define SAMPLES 10 // Número de muestras que se tomarán del sensor para hacer un promedio y reducir el ruido
 
 ////////// CONFIGURACION DEL SENSOR DE NIVEL //////////
-#define Level_Sensor 25
+#define Level_Sensor 25 //Pin al que está conectado el sensor de nivel
 
 ////////// CONFIGURACION DE OTRAS VARIABLES DE ALARMA Y PROCESO //////////
 #define Aviso_CONDUCTIVIDAD_media 200
 #define Alarma_CONDUCTIVIDAD_alta 300
 #define Alarma_TEMPERATURA_baja 20
 #define Alarma_TEMPERATURA_alta 30
-
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -48,7 +40,7 @@ void setup(){
   Serial.println(WiFi.RSSI());
 
   ///// Configuraciones de los sensores
-  sensors.begin(); // Inicializa el sensor de temperatura
+  setupSensorTemperatura();  // Llama a la función para inicializar el sensor de temperatura
   pinMode(Level_Sensor, INPUT); //defina el pin del sensor de nivel como input
   ///////////////////////////////////////////////////////
    delay(1000);  // Esperar a que el ESP32 arranque completamente
@@ -57,13 +49,12 @@ void setup(){
 void loop() {
   ////////// 1. LECTURA DEL SENSOR DE TEMPERATURA ////////// 
   // Por defecto el sensor usa 12 bits, que es lo más óptimo para este proyecto
-  sensors.requestTemperatures(); // Solicita la temperatura al sensor
-  float temperatura = sensors.getTempCByIndex(0); // Devuelve la temperatura en grados Celsius como un número float. Al solo existir un sensor DS18B20 conectado, siempre usará el índice 0
+  float temperatura = leerTemperatura(); // Devuelve la temperatura en grados Celsius como un número float. Al solo existir un sensor DS18B20 conectado, siempre usará el índice 0
   Serial.print("Temperatura: ");
   Serial.print(temperatura);
   Serial.println("°C");
 
-  ////////// 2. LECTURA DEL SENSOR DE CONDUCTIVIDAD ////////// 
+    ////////// 2. LECTURA DEL SENSOR DE CONDUCTIVIDAD ////////// 
   int Conductividad = 0; //declara una variable "Conductividad"
 
   for (int i = 0; i < SAMPLES; i++) {
