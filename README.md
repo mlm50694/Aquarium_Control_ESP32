@@ -1,6 +1,15 @@
-///// PROJECT DESCRIPTION /////
+<h1>🐠 Aquarium IoT Control with ESP32</h1>
 
-1. "Config.h" CONTENT
-//It defines the configuration of your wifi network
-const char* ssid = "YOUR WIFI NAME"; //Change -YOUR WIFI NAME- for the real wifi name
-const char* password = "YOUR WIFI PASSWORD"; //Change -YOUR WIFI PASSWORD- for the real wifi password
+<h2>📝 Notes</h2>
+
+<h3>1️⃣ "Config.h" Content</h3>
+<p>This file contains the configuration for your WiFi network:</p>
+
+<pre><code>#ifndef SECRETS_H
+#define SECRETS_H
+
+const char* ssid = "YOUR WIFI NAME"; // Change -YOUR WIFI NAME- for your actual WiFi name
+const char* password = "YOUR WIFI PASSWORD"; // Change -YOUR WIFI PASSWORD- for your actual WiFi password
+
+#endif
+</code></pre>
