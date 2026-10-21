@@ -25,8 +25,8 @@ void setupSensorTemperatura();
 
 /**
  * Lee la temperatura del sensor DS18B20
- * @return Temperatura en grados Celsius
+ * @return Temperatura en grados Celsius, o NAN si el sensor no responde
  */
 float leerTemperatura();
 
-#endif // FUNCION_TEMPERATURA_H_
+#endif // FUNCION_TEMPERATURA_H_
