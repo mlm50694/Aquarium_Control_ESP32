@@ -2,6 +2,7 @@
 
 <h2>📝 Notes</h2>
 
+<p>Comments at code in spanish</p>
 <h3>1️⃣ "Config.h" Content</h3>
 <p>This file contains the configuration for your WiFi network:</p>
 

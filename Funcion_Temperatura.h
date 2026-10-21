@@ -1,18 +1,32 @@
-// Funcion_Temperatura.h
-#ifndef FUNCION_TEMPERATURA_H
-#define FUNCION_TEMPERATURA_H
+/*******************************************************************************
+ * MÓDULO DE SENSOR DE TEMPERATURA DS18B20
+ * 
+ * Este archivo define las constantes y funciones para el sensor de temperatura.
+ *******************************************************************************/
 
-////////// CONFIGURACION DEL SENSOR DE TEMPERATURA DS18B20 //////////
-#include <OneWire.h> // Librería para la comunicación con dispositivos OneWire (como el sensor DS18B20)
-#include <DallasTemperature.h> // Librería específica para manejar sensores de temperatura DS18B20 con OneWire
+#ifndef FUNCION_TEMPERATURA_H_
+#define FUNCION_TEMPERATURA_H_
 
-#define Temperature_Sensor 4  // Pin al que está conectado el DS18B20
+/************************** INCLUSIÓN DE LIBRERÍAS ****************************/
+#include <OneWire.h>          // Comunicación con dispositivos OneWire
+#include <DallasTemperature.h> // Interfaz específica para sensores DS18B20
 
-// Declaraciones (solo anuncio, sin inicializar)e
-extern OneWire Wire;
-extern DallasTemperature sensors;
+/************************* DEFINICIÓN DE CONSTANTES **************************/
+#define Temperature_Sensor 4   // GPIO4 conectado al sensor DS18B20
 
-void setupSensorTemperatura();  // Declarar función para inicializar el sensor
-float leerTemperatura();  // Declarar función para leer la temperatura
+// Declaraciones de objetos compartidos
+extern OneWire oneWire;           // Objeto para comunicación OneWire
+extern DallasTemperature sensors; // Objeto para gestión de sensores DS18B20
 
-#endif
+/**
+ * Inicializa el sensor de temperatura
+ */
+void setupSensorTemperatura();
+
+/**
+ * Lee la temperatura del sensor DS18B20
+ * @return Temperatura en grados Celsius
+ */
+float leerTemperatura();
+
+#endif // FUNCION_TEMPERATURA_H_
